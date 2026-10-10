@@ -1,0 +1,13 @@
+.cursor/
+.freebuff/
+media/
+*.mp4
+*.mov
+*.zip
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.vercel
+_compile_standalone.py
+node_modules/

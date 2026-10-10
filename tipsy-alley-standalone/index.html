@@ -1,0 +1,4061 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tipsy Alley · Rooftop Restaurant &amp; Bar, Dehradun</title>
+    <meta
+      name="description"
+      content="Tipsy Alley is a rooftop restaurant and bar at Clarion Hotel, Nanda Ki Chowki, Dehradun. Multi-cuisine dining, a full bar, and a room of teal, wood, and velvet."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Figtree:wght@400;500;600;700&family=Mr+De+Haviland&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Outfit:wght@600;700&family=Playfair+Display:wght@600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.css"
+    />
+    <style>
+/* ==========================================================================
+   Tipsy Alley — rooftop restaurant & bar
+   Structure + animation system modelled on bellhopco.com
+   ========================================================================== */
+
+:root {
+  --cream: #f4f4f2;
+  --brand-black: #080604;
+  --ink: #080604;
+  --muted: #2f2d29;
+  --green: #3a6a54;
+  --teal: #153834;
+  --orange: #d4431f;
+  --sand: #e9deca;
+  --line: rgba(8, 6, 4, 0.22);
+
+  --sans: "Figtree", "Segoe UI", sans-serif;
+  --serif: "Newsreader", "Times New Roman", serif;
+  --hand: "Mr De Haviland", cursive;
+
+  --pad: clamp(1.25rem, 4vw, 3.5rem);
+  --header-h: 5.6rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  background: var(--cream);
+  -webkit-text-size-adjust: 100%;
+}
+
+html.nav-open,
+html.nav-open body {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  /* The cream lives on <html> so the floral wash below can sit between the page
+     canvas and the content. */
+  background: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+/* Floral wallpaper: the blue floral art as a fixed, faint wash behind the
+   transparent sections. Sections that paint their own background (sand, images,
+   the open menu's circle) cover it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/6b535f6b-329d-4cd2-a6f3-ad853437590f/floral-bg.jpg") center center / cover no-repeat;
+  opacity: 0.18;
+}
+
+body.is-fixed {
+  overflow: hidden;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 300;
+  padding: 0.6rem 0.9rem;
+  background: var(--brand-black);
+  color: var(--cream);
+}
+
+.skip:focus {
+  top: 0.6rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.h1 {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.text-handwritten {
+  font-family: var(--hand);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 1;
+  color: var(--green);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.button-primary {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.95rem 1.4rem;
+  border: 1px solid var(--brand-black);
+  border-radius: 999px;
+  color: var(--brand-black);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: color 0.3s ease-in-out;
+}
+
+.button-primary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 210%;
+  height: 0;
+  padding-top: 210%;
+  border-radius: 50%;
+  background: var(--brand-black);
+  transform: translate(-50%, -50%) scale(0.0001);
+  transition: transform 0.45s cubic-bezier(0.35, 0.755, 0.42, 0.95);
+  z-index: -1;
+}
+
+.button-primary .button__icon {
+  display: inline-flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.button-primary:hover {
+  color: var(--cream);
+}
+
+.button-primary:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.button-primary:hover .button__icon {
+  transform: translateX(6px);
+}
+
+.button-primary--orange {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+.button-primary--orange::before {
+  background: var(--orange);
+}
+
+/* --------------------------------------------------------------------------
+   Loader — Bellhop-style centered mark + liquid fill, then curtain reveal
+   -------------------------------------------------------------------------- */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100svh;
+  padding: 20px;
+  background: var(--cream);
+  transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.loader.is-done {
+  pointer-events: none;
+}
+
+.loader__content {
+  display: grid;
+  place-items: center;
+}
+
+.loader__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-width: 160px;
+  min-height: 150px;
+  font-family: "Newsreader", "Times New Roman", serif;
+  font-size: 7.5rem;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-align: center;
+  color: #12352f;
+  will-change: transform, opacity, font-family;
+}
+
+.loader__mark.is-script {
+  font-size: 9.5rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.75;
+  color: var(--green);
+}
+
+.loader__mark.is-display {
+  font-size: 8rem;
+  letter-spacing: -0.06em;
+}
+
+.loader__mark.is-sans {
+  font-weight: 700;
+  letter-spacing: -0.055em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  height: var(--header-h);
+  color: var(--cream);
+  transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease,
+    opacity 0.4s ease;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  transition: background 0.35s ease, border-color 0.35s ease;
+  z-index: -1;
+}
+
+.header__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.header.is-sticky {
+  color: var(--teal);
+}
+
+.header.is-sticky::after {
+  background: rgba(244, 244, 242, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom-color: var(--line);
+}
+
+.header.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.header.is-active {
+  color: var(--cream);
+  background: transparent;
+}
+
+.header.is-active::after {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+}
+
+.header__logo {
+  position: relative;
+  z-index: 3;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.nav-trigger {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+.nav-trigger__icon,
+.nav-trigger__text {
+  grid-area: 1 / 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-trigger__icon {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+}
+
+.nav-trigger__icon svg {
+  width: 100%;
+  height: auto;
+}
+
+.nav-trigger__text {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.nav-trigger.is-active .nav-trigger__icon {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.nav-trigger.is-active .nav-trigger__text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Expanding circle behind the menu */
+.header__decoration {
+  position: fixed;
+  top: -12vmax;
+  right: -12vmax;
+  z-index: 1;
+  width: 34vmax;
+  height: 34vmax;
+  border-radius: 50%;
+  background: var(--brand-black);
+  transform: scale(0);
+  /* Scale about the circle's own centre: anchored bottom-right the expanded
+     circle stayed pinned above the viewport and only painted a sliver at the
+     top, leaving the menu links without a backdrop. */
+  transform-origin: 50% 50%;
+  transition: transform 0.7s cubic-bezier(0.65, 0.05, 0.36, 1);
+  pointer-events: none;
+}
+
+.header.is-active .header__decoration {
+  transform: scale(12);
+}
+
+.header__menu {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: calc(var(--header-h) + 2rem) var(--pad) 3rem;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+}
+
+.header.is-active .header__menu {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.45s ease 0.15s, visibility 0s;
+}
+
+.header__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.header__nav a {
+  display: block;
+  overflow: hidden;
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 7vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.header__nav a span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header.is-active .header__nav a span {
+  transform: translateY(0);
+}
+
+.header.is-active .header__nav a:nth-child(1) span {
+  transition-delay: 0.25s;
+}
+.header.is-active .header__nav a:nth-child(2) span {
+  transition-delay: 0.31s;
+}
+.header.is-active .header__nav a:nth-child(3) span {
+  transition-delay: 0.37s;
+}
+.header.is-active .header__nav a:nth-child(4) span {
+  transition-delay: 0.43s;
+}
+.header.is-active .header__nav a:nth-child(5) span {
+  transition-delay: 0.49s;
+}
+.header.is-active .header__nav a:nth-child(6) span {
+  transition-delay: 0.55s;
+}
+
+.header__nav a:hover span {
+  transform: translateX(0.5rem);
+}
+
+.header__menu-cta {
+  align-self: flex-start;
+  overflow: hidden;
+  padding: 0.9rem 1.5rem;
+  border: 1px solid rgba(244, 244, 242, 0.45);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.header.is-active .header__menu-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.55s;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+}
+
+.hero__media-wrapper {
+  position: relative;
+  height: min(92vh, 52rem);
+  overflow: hidden;
+  background: #0d0d0d;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media img,
+.hero__media video,
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.hero__media-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--cream);
+  will-change: transform;
+}
+
+.hero__inner {
+  position: relative;
+}
+
+.hero__container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: clamp(2rem, 5vh, 3.5rem);
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.hero__head {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 7vw, 5.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.hero__title-handwritten {
+  display: inline-block;
+  margin: 0 0.06em;
+  font-size: 1.4em;
+  line-height: 0.6;
+  color: var(--green);
+  transform: translateY(0.08em);
+}
+
+.hero__body {
+  flex: 0 1 28rem;
+  max-width: 28rem;
+  padding-top: 0.6rem;
+}
+
+.hero__entry {
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.hero__arrow-scroll-down {
+  display: inline-block;
+  margin-top: 1.6rem;
+  color: var(--green);
+  transition: transform 0.3s ease-in-out;
+}
+
+.hero__arrow-scroll-down:hover {
+  transform: translateY(15px);
+}
+
+.hero__entry-icon svg {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Section primary — "The Room"
+   -------------------------------------------------------------------------- */
+
+.section-primary {
+  padding-top: clamp(2rem, 6vh, 4rem);
+}
+
+.section-primary__inner {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--brand-black);
+  border-bottom: 1px solid var(--brand-black);
+  padding: clamp(3.5rem, 9vh, 6rem) 0 clamp(4rem, 10vh, 7rem);
+}
+
+.section-primary__image-container {
+  flex: 1 1 20rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  max-width: 41rem;
+  overflow: hidden;
+}
+
+.section-primary__image-container-title {
+  flex: 0 0 100%;
+  margin: 0 0 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.section-primary__image-wrapper {
+  position: relative;
+  width: 33.33%;
+  padding-top: 118%;
+  overflow: hidden;
+}
+
+.section-primary__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section-primary__content {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 22rem;
+  align-self: center;
+  max-width: 30rem;
+  /* Was margin-left: -3rem, which dragged the column over the room photo so the
+     heading and the "Magenta banquettes..." paragraph rendered on top of it.
+     The copy now sits clear of the image with a responsive gutter. */
+  margin-left: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: 3rem;
+}
+
+.section-primary__title {
+  margin: 0 0 1rem;
+}
+
+.section-primary__title-handwritten {
+  font-size: 1.55em;
+  line-height: 0.62;
+}
+
+.section-primary__entry {
+  max-width: 26rem;
+  margin-top: 1.6rem;
+  color: var(--muted);
+}
+
+.section-primary__actions {
+  margin-top: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Showcase — horizontal pinned case-study cards
+   -------------------------------------------------------------------------- */
+
+.section-showcase {
+  padding-top: clamp(3rem, 9vh, 6rem);
+  overflow: hidden;
+}
+
+.cards-case-studies {
+  position: relative;
+  width: 100%;
+}
+
+.cards-case-studies__items {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100svh;
+  padding: 1.1rem var(--pad) 2rem;
+  overflow: visible;
+}
+
+.section-showcase__bar {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 2.25rem;
+  transition: opacity 0.3s;
+}
+
+.section-showcase .section-showcase__bar.is-hidden {
+  display: block;
+  opacity: 0;
+}
+
+.section-showcase__head-decoration {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  text-transform: uppercase;
+}
+
+.section-showcase__title {
+  display: block;
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.section-showcase__title-mobile {
+  display: none;
+}
+
+.section-showcase__head-decoration-line {
+  flex: 1;
+  height: 1px;
+  margin-bottom: 4px;
+  background: var(--brand-black);
+}
+
+.cards-case-studies__wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 2.25rem;
+  width: max-content;
+}
+
+.cards-case-studies__item {
+  flex: 0 0 clamp(15rem, 38vw, 30rem);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.card-case-study {
+  position: relative;
+}
+
+.card-case-study__link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+}
+
+.card-case-study__image-wrapper {
+  position: relative;
+  z-index: 2;
+  padding-top: 128%;
+  overflow: hidden;
+  border-radius: clamp(1.1rem, 2vw, 1.75rem);
+  background: #ddd;
+}
+
+.card-case-study__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-case-study:hover .card-case-study__image {
+  transform: scale(1.05);
+}
+
+.card-case-study__content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0.35rem 0.1rem;
+}
+
+.card-case-study__content h2 {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  letter-spacing: -0.02em;
+}
+
+.card-case-study__arrow {
+  flex: 0 0 auto;
+  width: 4.4rem;
+  color: var(--green);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-case-study:hover .card-case-study__arrow {
+  transform: translateX(6px);
+}
+
+.cards-case-studies__action {
+  flex: 0 0 22rem;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards-case-studies__btn {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 11rem;
+  height: 11rem;
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+  color: var(--green);
+  overflow: hidden;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.cards-case-studies__btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220%;
+  height: 0;
+  padding-top: 220%;
+  border-radius: 50%;
+  background: var(--green);
+  transform: translate(-50%, -50%) scale(0.0001);
+  transition: transform 0.45s cubic-bezier(0.35, 0.755, 0.42, 0.95);
+  z-index: -1;
+}
+
+.cards-case-studies__btn:hover {
+  color: var(--cream);
+  transform: scale(1.08);
+}
+
+.cards-case-studies__btn:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Fallback when the pin cannot run (reduced motion / no GSAP) */
+.cards-case-studies.is-fallback,
+html.no-js .cards-case-studies {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cards-case-studies.is-fallback .cards-case-studies__items,
+html.no-js .cards-case-studies__items {
+  min-height: auto;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Heading line wrapper (Trusted by / The guest book)
+   -------------------------------------------------------------------------- */
+
+.heading-line-wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+.heading-line-wrapper__decoration {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+  text-transform: uppercase;
+}
+
+.heading-line-wrapper__title {
+  display: block;
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.heading-line-wrapper__title-mobile {
+  display: none;
+}
+
+.heading-line-wrapper__decoration-line {
+  flex: 1;
+  height: 1px;
+  margin-bottom: 4px;
+  background: var(--brand-black);
+}
+
+/* --------------------------------------------------------------------------
+   Brands — auto-scrolling slider
+   -------------------------------------------------------------------------- */
+
+.section-brands {
+  overflow: hidden;
+  padding-top: clamp(3rem, 9vh, 6rem);
+}
+
+.section-brands__inner {
+  padding-top: clamp(3rem, 9vh, 6rem);
+  padding-bottom: clamp(4rem, 11vh, 8rem);
+}
+
+.slider-logos .splide__track {
+  overflow: visible;
+}
+
+.slider-logos .splide__list {
+  align-items: center;
+}
+
+.section-brands .heading-line-wrapper__title {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.logo-word {
+  display: block;
+  font-family: var(--sans);
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--brand-black);
+  opacity: 0.72;
+  white-space: nowrap;
+}
+
+.slider-logos .splide__slide {
+  padding: 0 clamp(1.5rem, 4vw, 3.5rem);
+}
+
+/* --------------------------------------------------------------------------
+   Testimonials — Google-style review cards
+   -------------------------------------------------------------------------- */
+
+.section-testimonials {
+  padding-top: clamp(2.5rem, 6vh, 4.5rem);
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.slider-reviews {
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.slider-reviews .splide__track {
+  overflow: visible;
+}
+
+.slider-reviews .splide__list {
+  align-items: stretch;
+}
+
+.slider-reviews .splide__slide {
+  width: min(19.5rem, 78vw);
+  height: auto;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  height: 100%;
+  min-height: 11.5rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(8, 6, 4, 0.08);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(8, 6, 4, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(8, 6, 4, 0.08);
+}
+
+.review-card__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.review-card__avatar {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--avatar, #5f6368);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.review-card__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.review-card__when {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.review-card__source {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.review-card__source svg {
+  display: block;
+}
+
+.review-card__source--zomato {
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.35rem;
+  background: #e23744;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.review-card__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12em;
+  perspective: 280px;
+  line-height: 1;
+}
+
+.review-card__star {
+  display: inline-block;
+  color: #fbbc04;
+  font-size: 1.05rem;
+  line-height: 1;
+  transform-origin: 50% 55%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: star-roll 2.8s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+  animation-delay: calc(var(--i, 0) * 0.14s);
+  will-change: transform;
+}
+
+@keyframes star-roll {
+  0%,
+  62%,
+  100% {
+    transform: rotateX(0deg) scale(1);
+    filter: brightness(1);
+  }
+  70% {
+    transform: rotateX(-95deg) scale(0.88);
+    filter: brightness(1.15);
+  }
+  78% {
+    transform: rotateX(-185deg) scale(1.08);
+    filter: brightness(1.25);
+  }
+  88% {
+    transform: rotateX(-275deg) scale(0.94);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: rotateX(-360deg) scale(1);
+    filter: brightness(1);
+  }
+}
+
+.review-card__body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #3c4043;
+}
+
+/* --------------------------------------------------------------------------
+   Section secondary — masked circle reveal
+   -------------------------------------------------------------------------- */
+
+.section-secondary {
+  position: relative;
+  overflow: hidden;
+  background: var(--sand);
+  padding-top: clamp(4rem, 12vh, 9rem);
+  padding-bottom: clamp(4rem, 12vh, 9rem);
+}
+
+.section-secondary__background-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: circle(0 at 0 0);
+  pointer-events: none;
+}
+
+.section-secondary__media-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section-secondary__background-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 15, 8, 0.32);
+}
+
+.section-secondary__circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 435px;
+  height: 435px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.section-secondary__inner {
+  position: relative;
+  z-index: 3;
+}
+
+.section-secondary__content {
+  position: relative;
+  z-index: 4;
+  max-width: 38rem;
+}
+
+.section-secondary__subtitle {
+  margin: 0 0 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.section-secondary__title {
+  margin: 0 0 1.1rem;
+}
+
+.section-secondary__title-handwritten {
+  font-size: 1.55em;
+  line-height: 0.62;
+  color: var(--orange);
+  cursor: pointer;
+}
+
+.section-secondary__entry {
+  max-width: 78%;
+  margin-top: 1.6rem;
+  color: var(--ink);
+}
+
+.section-secondary__actions {
+  margin-top: 1.5rem;
+  text-align: right;
+  max-width: 30rem;
+}
+
+/* --------------------------------------------------------------------------
+   Kitchen — plate grid + image reveals
+   -------------------------------------------------------------------------- */
+
+.section-kitchen {
+  padding-top: clamp(4rem, 10vh, 7rem);
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.section-kitchen__intro {
+  max-width: 40rem;
+  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.section-kitchen__eyebrow,
+.section-moments__eyebrow,
+.section-come-up__eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.section-kitchen__title {
+  margin: 0;
+}
+
+.section-kitchen__title-handwritten,
+.section-moments__title-handwritten,
+.section-come-up__title-handwritten {
+  font-size: 1.45em;
+  line-height: 0.62;
+  color: var(--green);
+}
+
+.section-kitchen__entry {
+  max-width: 28rem;
+  margin-top: 1.5rem;
+  color: var(--muted);
+}
+
+.section-kitchen__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: end;
+}
+
+.section-kitchen__cell {
+  min-width: 0;
+}
+
+.section-kitchen__cell--tall {
+  transform: translateY(clamp(-2rem, -4vw, -0.5rem));
+}
+
+.section-kitchen__media {
+  position: relative;
+  width: 22%;
+  padding-top: 128%;
+  overflow: hidden;
+  border-radius: clamp(1rem, 1.8vw, 1.5rem);
+  background: rgba(8, 6, 4, 0.06);
+}
+
+.section-kitchen__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.section-kitchen__caption {
+  margin: 0.85rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Book carousel — 3D page flip
+   -------------------------------------------------------------------------- */
+
+.section-book {
+  padding-top: clamp(4rem, 10vh, 7rem);
+  padding-bottom: clamp(3.5rem, 9vh, 6rem);
+  overflow: hidden;
+}
+
+.section-book__intro {
+  max-width: 36rem;
+  margin-bottom: clamp(2.2rem, 5vh, 3.5rem);
+}
+
+.section-book__eyebrow {
+  margin: 0 0 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.section-book__title {
+  margin: 0;
+}
+
+.section-book__title-handwritten {
+  font-size: 1.45em;
+  line-height: 0.62;
+  color: var(--green);
+}
+
+.book {
+  max-width: 58rem;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.book__stage {
+  position: relative;
+  width: min(100%, 52rem);
+  margin: 0 auto;
+  aspect-ratio: 1.55 / 1;
+  perspective: 2200px;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.book__shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -6%;
+  height: 18%;
+  background: radial-gradient(ellipse at center, rgba(8, 6, 4, 0.28), transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.book__binding {
+  position: absolute;
+  top: 2%;
+  bottom: 2%;
+  left: 50%;
+  width: 1.15rem;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(8, 6, 4, 0.18),
+    rgba(8, 6, 4, 0.05) 40%,
+    rgba(244, 244, 242, 0.35) 50%,
+    rgba(8, 6, 4, 0.08) 60%,
+    rgba(8, 6, 4, 0.22)
+  );
+  border-radius: 2px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.book__spread--left {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 50%;
+  z-index: 1;
+  transform-origin: right center;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.book__paper {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.85rem 0 0 0.85rem;
+  overflow: hidden;
+  background: #ebe6dc;
+  box-shadow: inset -12px 0 24px rgba(8, 6, 4, 0.08);
+}
+
+.book__paper--cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: clamp(1.25rem, 3vw, 2.2rem);
+  background:
+    linear-gradient(160deg, rgba(31, 74, 71, 0.92), rgba(8, 6, 4, 0.88)),
+    url("https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/3e71179a-4728-4f94-83c0-93eb6d85ce18/vibe-21.jpg") center / cover;
+  color: var(--cream);
+}
+
+.book__cover-mark {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  line-height: 1;
+  margin-bottom: auto;
+}
+
+.book__cover-title {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.book__cover-sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.book__pages {
+  position: absolute;
+  inset: 0 0 0 50%;
+  width: 50%;
+  transform-style: preserve-3d;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.book__page {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.book__face,
+.book__face *,
+.book__spread--left,
+.book__spread--left * {
+  pointer-events: none;
+}
+
+.book__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  background: #f3efe6;
+  box-shadow: 0 10px 30px rgba(8, 6, 4, 0.12);
+}
+
+.book__stage.is-at-start,
+.book__stage.is-at-end {
+  cursor: pointer;
+}
+
+.book__face--front {
+  border-radius: 0 0.85rem 0.85rem 0;
+}
+
+.book__face--back {
+  border-radius: 0.85rem 0 0 0.85rem;
+  transform: rotateY(180deg);
+}
+
+.book__face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book__face-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: clamp(1rem, 2.4vw, 1.6rem);
+  background: linear-gradient(180deg, transparent, rgba(8, 6, 4, 0.78));
+  color: var(--cream);
+}
+
+.book__face-copy h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.book__face-copy p {
+  margin: 0;
+  max-width: 16rem;
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+  line-height: 1.35;
+  color: rgba(244, 244, 242, 0.88);
+}
+
+.book__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: clamp(1.5rem, 4vh, 2.4rem);
+}
+
+.book__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0;
+  border: 1px solid var(--brand-black);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--brand-black);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.book__btn:hover:not(:disabled) {
+  background: var(--brand-black);
+  color: var(--cream);
+}
+
+.book__btn:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.book__pager {
+  min-width: 4.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Moments — full-bleed video evening
+   -------------------------------------------------------------------------- */
+
+.section-moments {
+  position: relative;
+  min-height: min(88vh, 48rem);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  color: var(--cream);
+  background: #0a0805;
+}
+
+.section-moments__media {
+  position: absolute;
+  inset: 0;
+}
+
+.section-moments__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+}
+
+.section-moments__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 6, 4, 0.15) 0%,
+    rgba(8, 6, 4, 0.55) 55%,
+    rgba(8, 6, 4, 0.82) 100%
+  );
+}
+
+.section-moments__inner {
+  position: relative;
+  z-index: 2;
+  padding-top: clamp(5rem, 14vh, 9rem);
+  padding-bottom: clamp(3.5rem, 9vh, 6rem);
+  max-width: 44rem;
+}
+
+.section-moments__eyebrow {
+  color: rgba(244, 244, 242, 0.78);
+}
+
+.section-moments__title {
+  margin: 0;
+  color: var(--cream);
+}
+
+.section-moments__title-handwritten {
+  color: #c8e0d2;
+}
+
+.section-moments__entry {
+  max-width: 26rem;
+  margin-top: 1.5rem;
+  color: rgba(244, 244, 242, 0.88);
+}
+
+/* --------------------------------------------------------------------------
+   Come up — visit teaser + stacked reveals
+   -------------------------------------------------------------------------- */
+
+.section-come-up {
+  padding-top: clamp(4rem, 11vh, 8rem);
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
+}
+
+.section-come-up__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  border-top: 1px solid var(--brand-black);
+  border-bottom: 1px solid var(--brand-black);
+  padding: clamp(3rem, 8vh, 5.5rem) 0;
+}
+
+.section-come-up__title {
+  margin: 0;
+}
+
+.section-come-up__entry {
+  margin-top: 1.5rem;
+  color: var(--muted);
+}
+
+.section-come-up__entry p {
+  margin: 0 0 0.35rem;
+}
+
+.section-come-up__actions {
+  margin-top: 1.6rem;
+}
+
+.section-come-up__gallery {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: 1rem;
+  align-items: end;
+}
+
+.section-come-up__shot-inner {
+  position: relative;
+  width: 24%;
+  padding-top: 130%;
+  overflow: hidden;
+  border-radius: clamp(1rem, 1.8vw, 1.5rem);
+  background: rgba(8, 6, 4, 0.06);
+}
+
+.section-come-up__shot--side .section-come-up__shot-inner {
+  padding-top: 150%;
+}
+
+.section-come-up__shot-inner img {
+  position: absolute;
+  inset: -8% 0;
+  width: 100%;
+  height: 116%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Footer — evening close
+   -------------------------------------------------------------------------- */
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(4.5rem, 12vh, 8rem);
+  padding-bottom: clamp(2rem, 5vh, 3.25rem);
+  color: var(--cream);
+  background:
+    radial-gradient(120% 90% at 10% -10%, rgba(75, 127, 102, 0.28), transparent 55%),
+    radial-gradient(90% 70% at 100% 20%, rgba(229, 78, 39, 0.12), transparent 50%),
+    linear-gradient(165deg, #153834 0%, #0d221f 48%, #0a1412 100%);
+}
+
+.footer__glow {
+  position: absolute;
+  inset: auto -20% -40% -20%;
+  height: 55%;
+  background: radial-gradient(ellipse at center, rgba(90, 154, 120, 0.18), transparent 65%);
+  pointer-events: none;
+}
+
+.footer__container {
+  position: relative;
+  z-index: 1;
+}
+
+.footer__brand {
+  max-width: 40rem;
+  margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
+}
+
+.footer__eyebrow,
+.footer__label {
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 244, 242, 0.55);
+}
+
+.footer__logo {
+  display: block;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 10vw, 6.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  color: var(--cream);
+}
+
+.footer__logo-hand {
+  display: inline-block;
+  margin-left: 0.08em;
+  font-size: 1.15em;
+  line-height: 0.6;
+  color: #9ec9b0;
+  transform: translateY(0.08em);
+}
+
+.footer__tagline {
+  max-width: 26rem;
+  margin: 1.35rem 0 0;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.4;
+  color: rgba(244, 244, 242, 0.72);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(2rem, 5vh, 3rem) 0;
+  border-top: 1px solid rgba(244, 244, 242, 0.16);
+  border-bottom: 1px solid rgba(244, 244, 242, 0.16);
+}
+
+.footer__text {
+  margin: 0;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.45;
+  color: rgba(244, 244, 242, 0.88);
+}
+
+.footer__text a {
+  color: inherit;
+  transition: color 0.25s ease;
+}
+
+.footer__text a:hover {
+  color: #9ec9b0;
+}
+
+.footer__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.15rem;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid rgba(244, 244, 242, 0.45);
+  border-radius: 999px;
+  color: var(--cream);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer__cta:hover {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--teal);
+}
+
+.footer__cta svg {
+  display: block;
+  width: 1.5rem;
+  height: auto;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: clamp(1.5rem, 4vh, 2.25rem);
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footer__nav a {
+  color: rgba(244, 244, 242, 0.55);
+  transition: color 0.25s ease;
+}
+
+.footer__nav a:hover {
+  color: var(--cream);
+}
+
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: 0 0 auto;
+  color: #9ec9b0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.3s ease, color 0.25s ease;
+}
+
+.footer__top:hover {
+  color: var(--cream);
+  transform: translateY(-4px);
+}
+
+.footer__top svg {
+  display: block;
+}
+
+html.js .footer {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js .footer.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+html.js .footer.is-visible .footer__logo-hand {
+  animation: footer-hand-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+@keyframes footer-hand-settle {
+  from {
+    opacity: 0;
+    transform: translateY(0.28em) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0.08em) rotate(0deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Custom cursor
+   -------------------------------------------------------------------------- */
+
+.custom-cursor {
+  display: none;
+}
+
+@media (min-width: 992px) and (pointer: fine) {
+  html,
+  html * {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--brand-black);
+    color: var(--cream);
+    /* Cream inner ring keeps the dark dot visible over dark ground (hero photo,
+       the open menu's black circle, the showcase bar); the dark outer ring keeps
+       its edge on the cream sections. */
+    box-shadow: 0 0 0 1.5px rgba(244, 244, 242, 0.9),
+      0 0 0 2.5px rgba(8, 6, 4, 0.4);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: pre;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out,
+      background-color 0.3s ease-in-out;
+  }
+
+  .custom-cursor.is-active {
+    width: 80px;
+    height: 80px;
+    background: rgba(229, 78, 39, 0.25);
+  }
+
+  .custom-cursor.has-text {
+    width: 139px;
+    height: 139px;
+    background: var(--orange);
+  }
+
+  /* Flip to a light dot wherever the ground is dark, so the pointer can never
+     end up the same colour as what is behind it. */
+  html.nav-open .custom-cursor,
+  .header:not(.is-sticky):hover ~ .custom-cursor {
+    background: var(--cream);
+    color: var(--brand-black);
+  }
+}
+
+.custom-cursor__text-container {
+  transform: scale(0);
+  transform-origin: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.custom-cursor.has-text .custom-cursor__text-container {
+  transform: scale(1);
+}
+
+.custom-cursor.is-invisible {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Animations
+   -------------------------------------------------------------------------- */
+
+[data-animation] {
+  transition-duration: var(--animation-duration, 0.3s);
+  transition-delay: var(--animation-delay, 0s);
+  transition-timing-function: var(--animation-easing, ease-in-out);
+}
+
+[data-animation^="fade"] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+[data-animation="fade-up"] {
+  transform: translate3d(0, 100px, 0);
+}
+
+[data-animation="fade-down"] {
+  transform: translate3d(0, -100px, 0);
+}
+
+[data-animation^="fade"].is-animated {
+  opacity: 1;
+  transform: none;
+}
+
+[data-split-lines] {
+  display: inline-flex;
+  flex-flow: column nowrap;
+}
+
+.text-newline {
+  transform: translateY(120%);
+  opacity: 0;
+}
+
+.text-newline > span {
+  display: inline-block;
+}
+
+.text-newline.is-animated {
+  transition: opacity 1s cubic-bezier(0.075, 0.82, 0.165, 1),
+    transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate-on-load].is-animated .text-newline {
+  transition: opacity 1s cubic-bezier(0.075, 0.82, 0.165, 1),
+    transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition-delay: 0.6s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* No-JS fallback: never leave content invisible */
+html.no-js [data-animation],
+html.no-js [data-animate-on-load],
+html.no-js .text-newline,
+html.no-js .footer {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 991px) {
+  .hero__container {
+    flex-direction: column;
+  }
+
+  .hero__body {
+    flex-basis: auto;
+    max-width: 34rem;
+  }
+
+  .hero__title-handwritten {
+    font-size: 1.25em;
+  }
+
+  .section-primary__inner {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .section-primary__image-container {
+    max-width: 100%;
+  }
+
+  .section-primary__content {
+    margin-left: 0;
+    padding-top: 0;
+    max-width: 100%;
+  }
+
+  .section-kitchen__grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .section-kitchen__cell--tall {
+    transform: none;
+  }
+
+  .section-come-up__inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .section-come-up__gallery {
+    grid-template-columns: 1fr 0.72fr;
+  }
+
+  .book__stage {
+    width: 100%;
+    aspect-ratio: 1.2 / 1;
+  }
+
+  .book__binding {
+    width: 0.7rem;
+  }
+
+  .book__face-copy p {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .book__stage {
+      aspect-ratio: 0.72 / 1;
+    }
+
+    .book__spread--left {
+      display: none;
+    }
+
+    .book__pages {
+      inset: 0;
+      width: 100%;
+    }
+
+    .book__binding {
+      display: none;
+    }
+
+    .book__face--front,
+    .book__face--back {
+      border-radius: 0.85rem;
+    }
+
+    .footer__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slider-reviews .splide__slide {
+      width: min(17.5rem, 82vw);
+    }
+  }
+
+  .cards-case-studies__item {
+    flex-basis: 78vw;
+  }
+
+  .cards-case-studies__action {
+    flex-basis: 15rem;
+  }
+
+  .section-secondary__entry {
+    max-width: 100%;
+  }
+
+  .section-secondary__actions {
+    text-align: left;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__block--cta {
+    grid-column: 1 / -1;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-showcase__title {
+    font-size: 0.66rem;
+  }
+
+  .cards-case-studies__item {
+    flex-basis: 84vw;
+  }
+
+  .section-showcase__title-mobile,
+  .heading-line-wrapper__title-mobile {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__video,
+  .section-moments__video {
+    display: none;
+  }
+
+  .hero__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/44530674-cfd8-4f32-8a67-49c38165396e/hero-room.jpg") center / cover no-repeat;
+  }
+
+  .section-moments__media {
+    background: url("https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/39933a78-c304-403c-ba9f-a8660b5ee2fa/vid-poster-2.jpg") center / cover no-repeat;
+  }
+
+  .section-kitchen__media,
+  .section-come-up__shot-inner {
+    width: 100%;
+  }
+
+  [data-animation],
+  [data-animate-on-load],
+  .text-newline,
+  html.js .footer {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .header__nav a span {
+    transform: none;
+  }
+
+  .review-card__star {
+    animation: none;
+  }
+}
+
+    </style>
+    <link rel="preload" as="image" href="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/44530674-cfd8-4f32-8a67-49c38165396e/hero-room.jpg" />
+  </head>
+  <body>
+    <a class="skip" href="#first-section">Skip to content</a>
+
+    <!-- ===================== LOADER (Bellhop-style fill + curtain) ===================== -->
+    <div class="loader" data-loader aria-hidden="true">
+      <div class="loader__content">
+        <div class="loader__mark" data-loader-mark aria-hidden="true">t.</div>
+        <span class="visually-hidden">Loading Tipsy Alley</span>
+      </div>
+    </div>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="header" data-header>
+      <div class="container header__inner">
+        <a href="#top" class="header__logo">tipsy&nbsp;alley.</a>
+
+        <button
+          class="nav-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-menu"
+          aria-label="Open menu"
+          data-nav-trigger
+        >
+          <span class="nav-trigger__icon" aria-hidden="true">
+            <svg viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M34.9441 19.1929C34.3932 11.5131 28.5018 5.33702 21.0824 4.20697C21.3162 3.79649 21.4517 3.32302 21.4517 2.81779C21.4517 1.26412 20.1876 0 18.6339 0C17.0802 0 15.8161 1.26412 15.8161 2.81779C15.8161 3.32302 15.9516 3.79646 16.1854 4.20697C8.76582 5.33699 2.87437 11.5131 2.32375 19.1929L2.24902 20.2353H35.0188L34.9441 19.1929ZM18.6339 1.94556C19.1147 1.94556 19.5061 2.33683 19.5061 2.81779C19.5061 3.29875 19.1148 3.69002 18.6339 3.69002C18.1531 3.69002 17.7617 3.29875 17.7617 2.81779C17.7617 2.33683 18.1531 1.94556 18.6339 1.94556ZM4.37749 18.2897C5.39589 11.2999 11.4659 5.96567 18.6339 5.96567C25.8019 5.96567 31.8717 11.2998 32.8903 18.2897H4.37749Z"
+                fill="currentColor"
+              />
+              <path
+                d="M0 22.6895V29.4046H37.2674V22.6895H0ZM35.3218 27.459H1.94559V24.635H35.3218V27.459Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          <span class="nav-trigger__text">Close</span>
+        </button>
+
+        <div class="header__decoration" aria-hidden="true"></div>
+
+        <div class="header__menu" id="site-menu" data-nav-menu aria-hidden="true">
+          <nav class="header__nav" aria-label="On this page">
+            <a href="#first-section"><span>The Room</span></a>
+            <a href="#showcase"><span>Along the roof</span></a>
+            <a href="#kitchen"><span>The Kitchen</span></a>
+            <a href="#book"><span>The Book</span></a>
+            <a href="#moments"><span>Evenings</span></a>
+            <a href="#testimonials"><span>The guest book</span></a>
+            <a href="#secondary"><span>The Bar</span></a>
+            <a href="#come-up"><span>Come up</span></a>
+            <a href="#visit"><span>Visit</span></a>
+          </nav>
+          <a
+            class="header__menu-cta"
+            href="https://www.google.com/maps/reserve/v/dine/c/vq3wu-HsV-M"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><span>Reserve a table</span></a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===================== HERO ===================== -->
+      <section class="hero" id="top">
+        <div class="hero__media-wrapper">
+          <div class="hero__media">
+            <video
+              class="hero__video"
+              autoplay
+              muted
+              loop
+              playsinline
+              poster="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/44530674-cfd8-4f32-8a67-49c38165396e/hero-room.jpg"
+              aria-hidden="true"
+            >
+              <source src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/7c1aeccb-4189-4c1b-9e53-a724a9d58e8f/clip-bar.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="hero__media-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="hero__inner">
+          <div class="container hero__container">
+            <div
+              class="hero__head"
+              data-animate-on-load="true"
+              data-animation="fade-up"
+              data-animation-duration="0.6"
+              data-animation-delay="2"
+            >
+              <h1 class="hero__title">
+                Become
+                <span class="hero__title-handwritten text-handwritten">the evening,</span>
+                <br />not just a stop.
+              </h1>
+            </div>
+            <div
+              class="hero__body"
+              data-animate-on-load="true"
+              data-animation="fade-up"
+              data-animation-duration="0.6"
+              data-animation-delay="2"
+            >
+              <div class="hero__entry">
+                <div class="text-block">
+                  A rooftop restaurant and bar at Clarion Hotel, Dehradun —
+                  multi-cuisine plates, a full bar, and a room of teal, wood, and
+                  velvet.
+                </div>
+                <a
+                  href="#first-section"
+                  class="hero__arrow-scroll-down"
+                  aria-label="Scroll to The Room"
+                >
+                  <span class="hero__entry-icon" aria-hidden="true">
+                    <svg width="26" height="31" viewBox="0 0 26 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13 0L13 27.8182" stroke="currentColor" stroke-width="2" />
+                      <path d="M1 17.4546L13 29.4546L25 17.4546" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== PRIMARY (what we do -> The Room) ===================== -->
+      <section class="section-primary" id="first-section">
+        <div class="container">
+          <div class="section-primary__inner">
+            <div class="section-primary__image-container" data-image-reveal-container>
+              <h6 class="section-primary__image-container-title">The Room</h6>
+              <div class="section-primary__image-wrapper" data-image-reveal-wrapper>
+                <img
+                  src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/97ac432c-ff89-4b2e-b082-7ca53c110dca/vibe-01.jpg"
+                  alt="Magenta banquettes, hanging bulbs, and gold screens in the Tipsy Alley dining room."
+                  loading="lazy"
+                  class="section-primary__image"
+                />
+              </div>
+            </div>
+
+            <div class="section-primary__content">
+              <h2 class="h1 section-primary__title" data-split-lines>
+                It's about velvet,<br />light, and<br /><span
+                  class="section-primary__title-handwritten text-handwritten"
+                  >the roof.</span
+                >
+              </h2>
+              <div
+                class="section-primary__entry"
+                data-animation="fade-up"
+                data-animation-duration="1"
+                data-animation-delay="0.6"
+                data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+              >
+                <div>
+                  Magenta banquettes, hanging bulbs, and gold screens catching the
+                  afternoon — then Dehradun cooling off beyond the rail.
+                </div>
+              </div>
+              <div
+                class="section-primary__actions"
+                data-animation="fade-up"
+                data-animation-duration="1"
+                data-animation-delay="0.6"
+                data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+              >
+                <a href="#showcase" class="button-primary">
+                  <div>Right this way</div>
+                  <div class="button__icon">
+                    <svg width="37" height="14" viewBox="0 0 37 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M29.1667 1L35 7M35 7L29.1667 13M35 7L-1.21594e-06 7" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SHOWCASE (horizontal pinned cards) ===================== -->
+      <section class="section-showcase" id="showcase" data-section-showcase>
+        <div class="section-showcase__inner">
+          <div class="section-showcase__body">
+            <div class="cards-case-studies" data-horizontal-scroll-track>
+              <div class="cards-case-studies__items" data-horizontal-scroll-element>
+                <div class="section-showcase__bar">
+                  <div class="section-showcase__head-decoration">
+                    <h6 class="section-showcase__title">Along the roof</h6>
+                    <h6 class="section-showcase__title section-showcase__title-mobile">The Room</h6>
+                    <div class="section-showcase__head-decoration-line"></div>
+                  </div>
+                </div>
+
+                <div class="cards-case-studies__wrapper">
+                  <div class="cards-case-studies__item">
+                    <div class="card-case-study" data-cursor-text="View">
+                      <a href="#first-section" class="card-case-study__link" aria-label="The Table"></a>
+                      <div class="card-case-study__image-wrapper card-case-study__image-wrapper--full-height">
+                        <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/44905207-454a-4390-8ea4-d047f432f524/owner-09.jpg" loading="lazy" alt="" class="card-case-study__image" />
+                      </div>
+                      <div class="card-case-study__content">
+                        <h2>The Table</h2>
+                        <div class="card-case-study__arrow">
+                          <svg width="87" height="18" viewBox="0 0 87 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 9L84 9.00001" stroke="currentColor" stroke-width="2" />
+                            <path d="M76.9644 17.0715L85.0001 9.03578L76.9644 1.00002" stroke="currentColor" stroke-width="2" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cards-case-studies__item">
+                    <div class="card-case-study" data-cursor-text="View">
+                      <a href="#showcase" class="card-case-study__link" aria-label="The Terrace"></a>
+                      <div class="card-case-study__image-wrapper">
+                        <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/0e98cfb0-e4da-41ab-9c9d-5779bde2b51b/vibe-26.jpg" loading="lazy" alt="" class="card-case-study__image" />
+                      </div>
+                      <div class="card-case-study__content">
+                        <h2>The Terrace</h2>
+                        <div class="card-case-study__arrow">
+                          <svg width="87" height="18" viewBox="0 0 87 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 9L84 9.00001" stroke="currentColor" stroke-width="2" />
+                            <path d="M76.9644 17.0715L85.0001 9.03578L76.9644 1.00002" stroke="currentColor" stroke-width="2" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cards-case-studies__item">
+                    <div class="card-case-study" data-cursor-text="View">
+                      <a href="#secondary" class="card-case-study__link" aria-label="The Bar"></a>
+                      <div class="card-case-study__image-wrapper">
+                        <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/37c5c2ae-b354-4aee-8e2b-8c305e2ec74a/owner-19.jpg" loading="lazy" alt="" class="card-case-study__image" />
+                      </div>
+                      <div class="card-case-study__content">
+                        <h2>The Bar</h2>
+                        <div class="card-case-study__arrow">
+                          <svg width="87" height="18" viewBox="0 0 87 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 9L84 9.00001" stroke="currentColor" stroke-width="2" />
+                            <path d="M76.9644 17.0715L85.0001 9.03578L76.9644 1.00002" stroke="currentColor" stroke-width="2" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cards-case-studies__item">
+                    <div class="card-case-study" data-cursor-text="View">
+                      <a href="#kitchen" class="card-case-study__link" aria-label="From the kitchen"></a>
+                      <div class="card-case-study__image-wrapper">
+                        <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/adcbb24f-f0d3-432e-9fb1-6403d055333d/owner-12.jpg" loading="lazy" alt="" class="card-case-study__image" />
+                      </div>
+                      <div class="card-case-study__content">
+                        <h2>From the kitchen</h2>
+                        <div class="card-case-study__arrow">
+                          <svg width="87" height="18" viewBox="0 0 87 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 9L84 9.00001" stroke="currentColor" stroke-width="2" />
+                            <path d="M76.9644 17.0715L85.0001 9.03578L76.9644 1.00002" stroke="currentColor" stroke-width="2" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cards-case-studies__item">
+                    <div class="card-case-study" data-cursor-text="View">
+                      <a href="#testimonials" class="card-case-study__link" aria-label="Voices"></a>
+                      <div class="card-case-study__image-wrapper">
+                        <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/c4e8eb51-7ac6-47d4-988a-3f4d0e092250/owner-07.jpg" loading="lazy" alt="" class="card-case-study__image" />
+                      </div>
+                      <div class="card-case-study__content">
+                        <h2>Voices</h2>
+                        <div class="card-case-study__arrow">
+                          <svg width="87" height="18" viewBox="0 0 87 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 9L84 9.00001" stroke="currentColor" stroke-width="2" />
+                            <path d="M76.9644 17.0715L85.0001 9.03578L76.9644 1.00002" stroke="currentColor" stroke-width="2" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cards-case-studies__action">
+                    <a
+                      href="https://www.zomato.com/dehradun/tipsy-alley-by-clarion-hotel-prem-nagar/menu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="cards-case-studies__btn"
+                      data-cursor-text="Menu"
+                    >
+                      <span>View<br />the menu</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== KITCHEN (image reveals + plate grid) ===================== -->
+      <section class="section-kitchen" id="kitchen">
+        <div class="container">
+          <div class="section-kitchen__intro">
+            <h6
+              class="section-kitchen__eyebrow"
+              data-animation="fade-up"
+              data-animation-duration="0.8"
+              data-animation-delay="0"
+            >
+              From the kitchen
+            </h6>
+            <h2 class="h1 section-kitchen__title" data-split-lines>
+              Plates that arrive<br />like the light does —<br /><span
+                class="section-kitchen__title-handwritten text-handwritten"
+                >slow, then sudden.</span
+              >
+            </h2>
+            <div
+              class="section-kitchen__entry"
+              data-animation="fade-up"
+              data-animation-duration="1"
+              data-animation-delay="0.4"
+              data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+            >
+              Multi-cuisine across the evening: North Indian warmth, Thai heat,
+              Chinese comfort, and bar snacks that keep the table talking.
+            </div>
+          </div>
+
+          <div class="section-kitchen__grid">
+            <div
+              class="section-kitchen__cell"
+              data-image-reveal-container
+              data-animation="fade-up"
+              data-animation-duration="1"
+              data-animation-delay="0.1"
+            >
+              <div class="section-kitchen__media" data-image-reveal-wrapper>
+                <img
+                  src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/868b404f-0cba-4250-a7b3-1f3c32b4aed6/food-18.jpg"
+                  alt="A plated dish from Tipsy Alley."
+                  loading="lazy"
+                />
+              </div>
+              <p class="section-kitchen__caption">North Indian</p>
+            </div>
+            <div
+              class="section-kitchen__cell section-kitchen__cell--tall"
+              data-image-reveal-container
+              data-animation="fade-up"
+              data-animation-duration="1"
+              data-animation-delay="0.25"
+            >
+              <div class="section-kitchen__media" data-image-reveal-wrapper>
+                <img
+                  src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/adcbb24f-f0d3-432e-9fb1-6403d055333d/owner-12.jpg"
+                  alt="Kitchen plating at Tipsy Alley."
+                  loading="lazy"
+                />
+              </div>
+              <p class="section-kitchen__caption">From the pass</p>
+            </div>
+            <div
+              class="section-kitchen__cell"
+              data-image-reveal-container
+              data-animation="fade-up"
+              data-animation-duration="1"
+              data-animation-delay="0.4"
+            >
+              <div class="section-kitchen__media" data-image-reveal-wrapper>
+                <img
+                  src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/eecfc2d6-0fc0-469e-a586-0c5d79b7e783/food-21.jpg"
+                  alt="A share plate from Tipsy Alley."
+                  loading="lazy"
+                />
+              </div>
+              <p class="section-kitchen__caption">Share plates</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BOOK CAROUSEL (3D page flip) ===================== -->
+      <section class="section-book" id="book">
+        <div class="container">
+          <div class="section-book__intro">
+            <h6
+              class="section-book__eyebrow"
+              data-animation="fade-up"
+              data-animation-duration="0.8"
+            >
+              Leaf through
+            </h6>
+            <h2 class="h1 section-book__title" data-split-lines>
+              A little book<br />of the roof —<br /><span
+                class="section-book__title-handwritten text-handwritten"
+                >turn the evening.</span
+              >
+            </h2>
+          </div>
+
+          <div
+            class="book"
+            data-book-carousel
+            data-animation="fade-up"
+            data-animation-duration="1"
+            data-animation-delay="0.2"
+            data-cursor-text="Flip"
+          >
+            <div class="book__stage">
+              <div class="book__shadow" aria-hidden="true"></div>
+              <div class="book__binding" aria-hidden="true"></div>
+
+              <div class="book__spread book__spread--left" aria-hidden="true">
+                <div class="book__paper book__paper--cover">
+                  <span class="book__cover-mark">t.</span>
+                  <span class="book__cover-title">tipsy alley.</span>
+                  <span class="book__cover-sub">Dehradun rooftop</span>
+                </div>
+              </div>
+
+              <div class="book__pages">
+                <article class="book__page" data-book-page>
+                  <div class="book__face book__face--front">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/97ac432c-ff89-4b2e-b082-7ca53c110dca/vibe-01.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>The Room</h3>
+                      <p>Velvet, bulbs, and gold screens catching the afternoon.</p>
+                    </div>
+                  </div>
+                  <div class="book__face book__face--back">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/44905207-454a-4390-8ea4-d047f432f524/owner-09.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>The Table</h3>
+                      <p>Where the evening finds its place.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="book__page" data-book-page>
+                  <div class="book__face book__face--front">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/2f83a457-b6aa-445a-b184-db8dbfd6e5c4/food-19.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>The Kitchen</h3>
+                      <p>Plates that arrive slow, then sudden.</p>
+                    </div>
+                  </div>
+                  <div class="book__face book__face--back">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/eecfc2d6-0fc0-469e-a586-0c5d79b7e783/food-21.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>Share plates</h3>
+                      <p>North Indian warmth, Thai heat, Chinese comfort.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="book__page" data-book-page>
+                  <div class="book__face book__face--front">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/37c5c2ae-b354-4aee-8e2b-8c305e2ec74a/owner-19.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>The Bar</h3>
+                      <p>Cocktails and mocktails, poured without hurry.</p>
+                    </div>
+                  </div>
+                  <div class="book__face book__face--back">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/0e98cfb0-e4da-41ab-9c9d-5779bde2b51b/vibe-26.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>The Terrace</h3>
+                      <p>Dehradun cooling off beyond the rail.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="book__page" data-book-page>
+                  <div class="book__face book__face--front">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/d8ce1010-91db-4b6e-beb9-e9976beb408d/vibe-24.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>Evenings</h3>
+                      <p>Stay for the light change on the roof.</p>
+                    </div>
+                  </div>
+                  <div class="book__face book__face--back">
+                    <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/d4fa1848-a110-45eb-9d1d-076be306a6d4/vibe-25.jpg" alt="" loading="lazy" />
+                    <div class="book__face-copy">
+                      <h3>Come up</h3>
+                      <p>Clarion Hotel · open 9:00 – 11:00.</p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="book__controls">
+              <button type="button" class="book__btn" data-book-prev aria-label="Previous page">
+                <svg width="37" height="14" viewBox="0 0 37 14" fill="none" aria-hidden="true">
+                  <path d="M7.8333 13L2 7M2 7L7.8333 1M2 7H37" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </button>
+              <div class="book__pager" data-book-pager aria-live="polite">1 / 4</div>
+              <button type="button" class="book__btn" data-book-next aria-label="Next page">
+                <svg width="37" height="14" viewBox="0 0 37 14" fill="none" aria-hidden="true">
+                  <path d="M29.1667 1L35 7M35 7L29.1667 13M35 7H0" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== BRANDS (trusted by, auto-scroll) ===================== -->
+      <section class="section-brands" id="brands">
+        <div class="container">
+          <div class="heading-line-wrapper">
+            <div class="heading-line-wrapper__decoration">
+              <h6 class="heading-line-wrapper__title">Trusted by</h6>
+              <h6 class="heading-line-wrapper__title heading-line-wrapper__title-mobile">Trusted by</h6>
+              <div class="heading-line-wrapper__decoration-line"></div>
+            </div>
+          </div>
+        </div>
+        <div class="section-brands__inner">
+          <div class="splide slider-logos" data-cursor-text="Drag" aria-label="Where Tipsy Alley is reviewed">
+            <div class="splide__track">
+              <ul class="splide__list slider-logos__list">
+                <li class="splide__slide"><span class="logo-word">Google</span></li>
+                <li class="splide__slide"><span class="logo-word">Zomato</span></li>
+                <li class="splide__slide"><span class="logo-word">Tripadvisor</span></li>
+                <li class="splide__slide"><span class="logo-word">Instagram</span></li>
+                <li class="splide__slide"><span class="logo-word">Swiggy</span></li>
+                <li class="splide__slide"><span class="logo-word">EazyDiner</span></li>
+                <li class="splide__slide"><span class="logo-word">Clarion</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== TESTIMONIALS (guest book — Google-style cards) ===================== -->
+      <section class="section-testimonials" id="testimonials">
+        <div class="container">
+          <div class="heading-line-wrapper">
+            <div class="heading-line-wrapper__decoration">
+              <h6 class="heading-line-wrapper__title">The guest book</h6>
+              <h6 class="heading-line-wrapper__title heading-line-wrapper__title-mobile">The guest book</h6>
+              <div class="heading-line-wrapper__decoration-line"></div>
+            </div>
+          </div>
+
+          <div
+            class="splide slider-reviews"
+            data-cursor-text="Drag"
+            data-animation="fade-up"
+            data-animation-duration="0.9"
+            data-animation-delay="0.1"
+            aria-label="Guest reviews"
+          >
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide">
+                  <article class="review-card">
+                    <header class="review-card__head">
+                      <div class="review-card__avatar" aria-hidden="true" style="--avatar: #4285f4">F</div>
+                      <div class="review-card__who">
+                        <div class="review-card__name">From the floor</div>
+                        <div class="review-card__when">2 months ago</div>
+                      </div>
+                      <span class="review-card__source" title="Google">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                      </span>
+                    </header>
+                    <div class="review-card__stars" aria-label="5 out of 5 stars">
+                      <span class="review-card__star" style="--i:0" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:1" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:2" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:3" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:4" aria-hidden="true">★</span>
+                    </div>
+                    <p class="review-card__body">
+                      The ambience, the food, the drinks, the music, and above all the
+                      courteous staff.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="splide__slide">
+                  <article class="review-card">
+                    <header class="review-card__head">
+                      <div class="review-card__avatar" aria-hidden="true" style="--avatar: #ea4335">S</div>
+                      <div class="review-card__who">
+                        <div class="review-card__name">Stuti</div>
+                        <div class="review-card__when">3 weeks ago</div>
+                      </div>
+                      <span class="review-card__source" title="Google">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                      </span>
+                    </header>
+                    <div class="review-card__stars" aria-label="5 out of 5 stars">
+                      <span class="review-card__star" style="--i:0" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:1" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:2" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:3" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:4" aria-hidden="true">★</span>
+                    </div>
+                    <p class="review-card__body">
+                      The view from the rooftop seating is the cherry on top.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="splide__slide">
+                  <article class="review-card">
+                    <header class="review-card__head">
+                      <div class="review-card__avatar" aria-hidden="true" style="--avatar: #e23744">V</div>
+                      <div class="review-card__who">
+                        <div class="review-card__name">Vidisha</div>
+                        <div class="review-card__when">1 month ago</div>
+                      </div>
+                      <span class="review-card__source review-card__source--zomato">Zomato</span>
+                    </header>
+                    <div class="review-card__stars" aria-label="5 out of 5 stars">
+                      <span class="review-card__star" style="--i:0" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:1" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:2" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:3" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:4" aria-hidden="true">★</span>
+                    </div>
+                    <p class="review-card__body">
+                      Yummy food and lovely staff. A wonderful experience.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="splide__slide">
+                  <article class="review-card">
+                    <header class="review-card__head">
+                      <div class="review-card__avatar" aria-hidden="true" style="--avatar: #34a853">A</div>
+                      <div class="review-card__who">
+                        <div class="review-card__name">Ananya</div>
+                        <div class="review-card__when">5 days ago</div>
+                      </div>
+                      <span class="review-card__source" title="Google">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                      </span>
+                    </header>
+                    <div class="review-card__stars" aria-label="5 out of 5 stars">
+                      <span class="review-card__star" style="--i:0" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:1" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:2" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:3" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:4" aria-hidden="true">★</span>
+                    </div>
+                    <p class="review-card__body">
+                      A rooftop that finally feels like an evening out — teal, wood, and
+                      velvet under the open sky.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="splide__slide">
+                  <article class="review-card">
+                    <header class="review-card__head">
+                      <div class="review-card__avatar" aria-hidden="true" style="--avatar: #f4c430">R</div>
+                      <div class="review-card__who">
+                        <div class="review-card__name">Rohan</div>
+                        <div class="review-card__when">6 weeks ago</div>
+                      </div>
+                      <span class="review-card__source review-card__source--zomato">Zomato</span>
+                    </header>
+                    <div class="review-card__stars" aria-label="5 out of 5 stars">
+                      <span class="review-card__star" style="--i:0" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:1" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:2" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:3" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:4" aria-hidden="true">★</span>
+                    </div>
+                    <p class="review-card__body">
+                      Multi-cuisine done properly, and a bar that knows when to leave you
+                      alone.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="splide__slide">
+                  <article class="review-card">
+                    <header class="review-card__head">
+                      <div class="review-card__avatar" aria-hidden="true" style="--avatar: #1a73e8">M</div>
+                      <div class="review-card__who">
+                        <div class="review-card__name">Meera</div>
+                        <div class="review-card__when">4 months ago</div>
+                      </div>
+                      <span class="review-card__source" title="Google">
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                      </span>
+                    </header>
+                    <div class="review-card__stars" aria-label="5 out of 5 stars">
+                      <span class="review-card__star" style="--i:0" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:1" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:2" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:3" aria-hidden="true">★</span>
+                      <span class="review-card__star" style="--i:4" aria-hidden="true">★</span>
+                    </div>
+                    <p class="review-card__body">
+                      Perfect for a slow evening — cocktails, music, and Dehradun cooling
+                      off beyond the rail.
+                    </p>
+                  </article>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== MOMENTS (full-bleed video + scroll fade) ===================== -->
+      <section class="section-moments" id="moments">
+        <div class="section-moments__media" aria-hidden="true">
+          <video
+            class="section-moments__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/39933a78-c304-403c-ba9f-a8660b5ee2fa/vid-poster-2.jpg"
+          >
+            <source src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/4020663c-329f-4db6-8cfc-032cdcd5f19d/clip-kulhad.mp4" type="video/mp4" />
+          </video>
+          <div class="section-moments__veil"></div>
+        </div>
+        <div class="container section-moments__inner">
+          <h6
+            class="section-moments__eyebrow"
+            data-animation="fade-up"
+            data-animation-duration="0.8"
+          >
+            Slow evenings
+          </h6>
+          <h2 class="h1 section-moments__title" data-split-lines>
+            Kulhad steam,<br />city hush,<br /><span
+              class="section-moments__title-handwritten text-handwritten"
+              >one more pour.</span
+            >
+          </h2>
+          <div
+            class="section-moments__entry"
+            data-animation="fade-up"
+            data-animation-duration="1"
+            data-animation-delay="0.5"
+            data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+          >
+            Stay for the light change. The roof holds the evening longer than the
+            street below.
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SECONDARY (masked reveal, why we do it -> The Bar) ===================== -->
+      <section class="section-secondary" id="secondary" data-masked-section>
+        <div class="section-secondary__background-media" data-masked-section-overlay aria-hidden="true">
+          <img src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/2f83a457-b6aa-445a-b184-db8dbfd6e5c4/food-19.jpg" alt="" class="section-secondary__media-image" loading="lazy" />
+        </div>
+        <div class="section-secondary__circle" data-masked-section-circle aria-hidden="true"></div>
+
+        <div class="container">
+          <div class="section-secondary__inner">
+            <div class="section-secondary__content">
+              <h6 class="section-secondary__subtitle">Why the roof</h6>
+              <h2 class="h1 section-secondary__title" data-split-lines>
+                Where the glass is<br /><span
+                  class="section-secondary__title-handwritten text-handwritten"
+                  data-masked-section-trigger
+                  >part of the room.</span
+                >
+              </h2>
+              <div
+                class="section-secondary__entry"
+                data-animation="fade-up"
+                data-animation-duration="1"
+                data-animation-delay="0.6"
+                data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+              >
+                <div>
+                  A full bar for the evening, and a cold glass if you would rather
+                  not. Mocktails sit beside the cocktails. The pour is unhurried.
+                </div>
+              </div>
+              <div
+                class="section-secondary__actions"
+                data-animation="fade-up"
+                data-animation-duration="1"
+                data-animation-delay="0.6"
+                data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+              >
+                <a
+                  href="https://www.zomato.com/dehradun/tipsy-alley-by-clarion-hotel-prem-nagar/menu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="button-primary button-primary--orange"
+                >
+                  <div>See the menu</div>
+                  <div class="button__icon">
+                    <svg width="37" height="14" viewBox="0 0 37 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M29.1667 1L35 7M35 7L29.1667 13M35 7L-1.21594e-06 7" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== COME UP (reversed reveal + visit teaser) ===================== -->
+      <section class="section-come-up" id="come-up">
+        <div class="container">
+          <div class="section-come-up__inner">
+            <div class="section-come-up__content">
+              <h6
+                class="section-come-up__eyebrow"
+                data-animation="fade-up"
+                data-animation-duration="0.8"
+              >
+                Come up
+              </h6>
+              <h2 class="h1 section-come-up__title" data-split-lines>
+                Clarion Hotel,<br />Kolhupani —<br /><span
+                  class="section-come-up__title-handwritten text-handwritten"
+                  >the roof is waiting.</span
+                >
+              </h2>
+              <div
+                class="section-come-up__entry"
+                data-animation="fade-up"
+                data-animation-duration="1"
+                data-animation-delay="0.45"
+                data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+              >
+                <p>Open 9:00 – 11:00, every day</p>
+                <p>Nanda Ki Chowki, Dehradun</p>
+              </div>
+              <div
+                class="section-come-up__actions"
+                data-animation="fade-up"
+                data-animation-duration="1"
+                data-animation-delay="0.55"
+                data-animation-easing="cubic-bezier(.075,.82,.165,1)"
+              >
+                <a
+                  href="https://www.google.com/maps/reserve/v/dine/c/vq3wu-HsV-M"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="button-primary"
+                >
+                  <div>Reserve a table</div>
+                  <div class="button__icon">
+                    <svg width="37" height="14" viewBox="0 0 37 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M29.1667 1L35 7M35 7L29.1667 13M35 7L-1.21594e-06 7" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="section-come-up__gallery"
+              data-animation="fade-up"
+              data-animation-duration="1"
+              data-animation-delay="0.2"
+            >
+              <div
+                class="section-come-up__shot section-come-up__shot--main"
+                data-image-reveal-container
+              >
+                <div class="section-come-up__shot-inner" data-image-reveal-wrapper>
+                  <img
+                    src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/d8ce1010-91db-4b6e-beb9-e9976beb408d/vibe-24.jpg"
+                    alt="Evening light across Tipsy Alley."
+                    loading="lazy"
+                    data-parallax="40"
+                  />
+                </div>
+              </div>
+              <div
+                class="section-come-up__shot section-come-up__shot--side"
+                data-image-reveal-container
+              >
+                <div class="section-come-up__shot-inner" data-image-reveal-wrapper>
+                  <img
+                    src="https://cdn.storebox.ai/media/03f4d3f1-470b-4f69-b849-069fc3392f80/d4fa1848-a110-45eb-9d1d-076be306a6d4/vibe-25.jpg"
+                    alt="The rooftop dining room."
+                    loading="lazy"
+                    data-parallax="24"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer" id="visit">
+      <div class="footer__glow" aria-hidden="true"></div>
+      <div class="container footer__container">
+        <div class="footer__brand">
+          <p class="footer__eyebrow">Visit</p>
+          <a href="#top" class="footer__logo">
+            tipsy
+            <span class="footer__logo-hand text-handwritten">alley.</span>
+          </a>
+          <p class="footer__tagline">
+            Founded on a rooftop in Dehradun. Find us wherever the evening goes.
+          </p>
+        </div>
+
+        <div class="footer__grid">
+          <div class="footer__block">
+            <h6 class="footer__label">Find us</h6>
+            <p class="footer__text">
+              Clarion Hotel<br />
+              Kolhupani, Nanda Ki Chowki<br />
+              Dehradun
+            </p>
+          </div>
+
+          <div class="footer__block">
+            <h6 class="footer__label">Hours</h6>
+            <p class="footer__text">
+              Open every day<br />
+              9:00 – 11:00
+            </p>
+          </div>
+
+          <div class="footer__block">
+            <h6 class="footer__label">Contact</h6>
+            <p class="footer__text">
+              <a href="tel:+919528022682">095280 22682</a><br />
+              <a
+                href="https://www.instagram.com/tipsy_alley/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Instagram</a
+              >
+            </p>
+          </div>
+
+          <div class="footer__block footer__block--cta">
+            <h6 class="footer__label">Tonight</h6>
+            <a
+              class="footer__cta"
+              href="https://www.google.com/maps/reserve/v/dine/c/vq3wu-HsV-M"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Reserve a table</span>
+              <svg width="37" height="14" viewBox="0 0 37 14" fill="none" aria-hidden="true">
+                <path
+                  d="M29.1667 1L35 7M35 7L29.1667 13M35 7H0"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__bottom">
+          <nav class="footer__nav" aria-label="Footer">
+            <a href="#first-section">The Room</a>
+            <a href="#kitchen">The Kitchen</a>
+            <a href="#book">The Book</a>
+            <a href="#moments">Evenings</a>
+            <a href="#secondary">The Bar</a>
+            <a href="#come-up">Come up</a>
+            <a href="#testimonials">Guest book</a>
+          </nav>
+          <a href="#top" class="footer__top" aria-label="Back to top">
+            <span>Back to top</span>
+            <svg width="18" height="22" viewBox="0 0 18 22" fill="none" aria-hidden="true">
+              <path d="M9 21V3" stroke="currentColor" stroke-width="2" />
+              <path d="M1 9.5L9 1.5L17 9.5" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===================== CUSTOM CURSOR ===================== -->
+    <div class="custom-cursor" aria-hidden="true">
+      <div class="custom-cursor__text-container"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script>
+/**
+ * Tipsy Alley — interaction + animation layer.
+ * Mirrors the behaviour of bellhopco.com:
+ *   Lenis smooth scroll, GSAP ScrollTrigger reveals, line-split headings,
+ *   image reveal, pinned horizontal showcase, mouse-follow mask reveal,
+ *   Splide auto-scroll logo marquee + guest-book slider, custom cursor.
+ */
+(() => {
+  const root = document.documentElement;
+  root.classList.remove("no-js");
+  root.classList.add("js");
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isFine = window.matchMedia("(min-width: 992px) and (pointer: fine)").matches;
+  const isTouch =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    navigator.msMaxTouchPoints > 0;
+
+  const header = document.querySelector("[data-header]");
+  const navTrigger = document.querySelector("[data-nav-trigger]");
+  const navMenu = document.querySelector("[data-nav-menu]");
+  const customCursor = document.querySelector(".custom-cursor");
+  const cursorTextEl = document.querySelector(".custom-cursor__text-container");
+  const loader = document.querySelector("[data-loader]");
+  const heroOverlay = document.querySelector(".hero__media-overlay");
+
+  const hasGsap = typeof window.gsap !== "undefined";
+  if (hasGsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+  let lenis = null;
+
+  /* ----------------------------------------------------------- Hero video */
+  function setupHeroVideo() {
+    const videos = document.querySelectorAll(".hero__video, .section-moments__video");
+    videos.forEach((video) => {
+      if (reduce) {
+        video.pause();
+        video.removeAttribute("autoplay");
+        return;
+      }
+      const play = () => {
+        const p = video.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      };
+      if (video.readyState >= 2) play();
+      else video.addEventListener("loadeddata", play, { once: true });
+    });
+  }
+
+  /* ----------------------------------------------------- Parallax on scroll */
+  function setupParallax() {
+    const items = document.querySelectorAll("[data-parallax]");
+    if (!items.length || !hasGsap || reduce || !window.ScrollTrigger) return;
+
+    items.forEach((el) => {
+      const amount = Number(el.getAttribute("data-parallax")) || 30;
+      gsap.fromTo(
+        el,
+        { yPercent: -amount * 0.35 },
+        {
+          yPercent: amount * 0.35,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el.closest("section") || el,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2
+          }
+        }
+      );
+    });
+  }
+
+  /* ------------------------------------------------------------------ Lenis */
+  function startLenis() {
+    if (reduce || typeof window.Lenis === "undefined") return;
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.4,
+      syncTouch: false
+    });
+    window.lenis = lenis;
+
+    if (hasGsap && window.ScrollTrigger) {
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      };
+      requestAnimationFrame(raf);
+    }
+
+    lenis.on("scroll", checkSticky);
+  }
+
+  /* ----------------------------------------------------------- Sticky header */
+  function checkSticky() {
+    if (!header) return;
+    const top = window.pageYOffset || root.scrollTop || 0;
+    header.classList.toggle("is-sticky", top > 1);
+  }
+
+  /* --------------------------------------------------------------- Full menu */
+  function setupMenu() {
+    if (!navTrigger || !header || !navMenu) return;
+    let open = false;
+
+    const setOpen = (state) => {
+      open = state;
+      header.classList.toggle("is-active", open);
+      navTrigger.classList.toggle("is-active", open);
+      navTrigger.setAttribute("aria-expanded", open ? "true" : "false");
+      navTrigger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      navMenu.setAttribute("aria-hidden", open ? "false" : "true");
+      document.body.classList.toggle("is-fixed", open);
+      root.classList.toggle("nav-open", open);
+      if (lenis) open ? lenis.stop() : lenis.start();
+    };
+
+    navTrigger.addEventListener("click", () => setOpen(!open));
+
+    navMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && open) setOpen(false);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!open) return;
+      if (!event.target.closest(".header")) setOpen(false);
+    });
+  }
+
+  /* ------------------------------------------------------ Split lines on <br> */
+  function splitTextToNewLines() {
+    document.querySelectorAll("[data-split-lines]").forEach((el) => {
+      const parts = el.innerHTML.trim().split(/<br\s*\/?>/i);
+      el.innerHTML = parts
+        .map(
+          (part) =>
+            '<div class="text-newline"><span>' + part.trim() + "</span></div>"
+        )
+        .join("");
+    });
+  }
+
+  /* -------------------------------------------------------------- Intro layer */
+  /* Font-cycling "t." then fade loader + curtain reveal */
+  function playIntro() {
+    const unlock = () => document.body.classList.remove("is-fixed");
+    document.body.classList.add("is-fixed");
+    const mark = loader && loader.querySelector("[data-loader-mark]");
+
+    if (reduce || !hasGsap) {
+      if (loader) loader.style.display = "none";
+      if (heroOverlay) heroOverlay.style.display = "none";
+      unlock();
+      return;
+    }
+
+    if (heroOverlay) gsap.set(heroOverlay, { yPercent: 0 });
+
+    const faces = [
+      { family: '"Newsreader", "Times New Roman", serif', mode: "" },
+      { family: '"Figtree", "Segoe UI", sans-serif', mode: "is-sans" },
+      { family: '"Playfair Display", Georgia, serif', mode: "is-display" },
+      { family: '"Syne", "Segoe UI", sans-serif', mode: "is-sans" },
+      { family: '"Cormorant Garamond", Georgia, serif', mode: "is-display" },
+      { family: '"Outfit", "Segoe UI", sans-serif', mode: "is-sans" },
+      { family: '"Mr De Haviland", cursive', mode: "is-script" },
+      { family: '"Newsreader", "Times New Roman", serif', mode: "" }
+    ];
+
+    const applyFace = (face) => {
+      if (!mark) return;
+      mark.style.fontFamily = face.family;
+      mark.classList.remove("is-script", "is-display", "is-sans");
+      if (face.mode) mark.classList.add(face.mode);
+    };
+
+    const warmFonts = () => {
+      if (!document.fonts || !document.fonts.load) return Promise.resolve();
+      const loads = Promise.all(
+        [
+          "700 120px Newsreader",
+          "700 120px Figtree",
+          "700 120px 'Playfair Display'",
+          "800 120px Syne",
+          "700 120px 'Cormorant Garamond'",
+          "700 120px Outfit",
+          "400 120px 'Mr De Haviland'"
+        ].map((spec) => document.fonts.load(spec).catch(() => null))
+      );
+      // Never block the intro if a webfont hangs
+      const timeout = new Promise((resolve) => setTimeout(resolve, 900));
+      return Promise.race([loads, timeout]);
+    };
+
+    const tl = gsap.timeline({ paused: true, onComplete: unlock });
+
+    const buildIntro = () => {
+      if (mark) {
+        applyFace(faces[0]);
+        gsap.set(mark, { scale: 1, autoAlpha: 1 });
+
+        faces.forEach((face, i) => {
+          if (i === 0) return;
+          tl.to(mark, {
+            scale: 0.86,
+            autoAlpha: 0.35,
+            duration: 0.1,
+            ease: "power2.in",
+            onComplete: () => applyFace(face)
+          });
+          tl.to(mark, {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.16,
+            ease: "power2.out"
+          });
+          tl.to({}, { duration: 0.12 });
+        });
+
+        tl.to({}, { duration: 0.28 });
+      } else {
+        tl.to({}, { duration: 1.6 });
+      }
+
+      if (loader) {
+        tl.to(loader, {
+          autoAlpha: 0,
+          duration: 0.35,
+          ease: "power2.out",
+          onComplete: () => {
+            loader.style.display = "none";
+            loader.classList.add("is-done");
+          }
+        });
+      }
+
+      if (heroOverlay) {
+        tl.to(
+          heroOverlay,
+          {
+            yPercent: -101,
+            duration: 1.15,
+            ease: "power4.inOut"
+          },
+          loader ? "-=0.12" : 0
+        );
+      }
+
+      tl.play(0);
+    };
+
+    warmFonts().then(buildIntro).catch(buildIntro);
+  }
+
+  /* ------------------------------------------------------------ Image reveal */
+  function setupImageReveal() {
+    const containers = document.querySelectorAll("[data-image-reveal-container]");
+    if (!containers.length) return;
+
+    if (!hasGsap || reduce) {
+      containers.forEach((container) => {
+        const wrapper = container.querySelector("[data-image-reveal-wrapper]");
+        if (wrapper) wrapper.style.width = "100%";
+      });
+      return;
+    }
+
+    containers.forEach((container) => {
+      const wrapper = container.querySelector("[data-image-reveal-wrapper]");
+      if (!wrapper) return;
+      const vertical = container.hasAttribute("data-image-reveal-vertical");
+
+      if (vertical) {
+        gsap.to(wrapper, {
+          height: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "-10% center",
+            end: "90% bottom",
+            scrub: 1.5
+          }
+        });
+      } else {
+        gsap.to(wrapper, {
+          width: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "-55% 35%",
+            end: "65% bottom",
+            scrub: 1.5
+          }
+        });
+      }
+    });
+  }
+
+  /* ------------------------------------------------- Pinned horizontal scroll */
+  /* Runs at every width (mobile included) so the showcase scrolls the same way. */
+  function setupHorizontalScroll() {
+    const tracks = document.querySelectorAll("[data-horizontal-scroll-track]");
+    if (!tracks.length) return;
+
+    const bar = document.querySelector(
+      "[data-section-showcase] .section-showcase__bar"
+    );
+    const targets = [header, bar].filter(Boolean);
+
+    tracks.forEach((track) => {
+      const element = track.querySelector("[data-horizontal-scroll-element]");
+      if (!element) return;
+
+      // Degrade to a native horizontal swipe when the pin cannot run.
+      if (!hasGsap || reduce) {
+        track.classList.add("is-fallback");
+        return;
+      }
+
+      const travel = () => Math.max(track.scrollWidth - window.innerWidth + 64, 1);
+
+      gsap.to(element, {
+        x: () => track.scrollWidth * -1,
+        xPercent: 100,
+        ease: "none",
+        scrollTrigger: {
+          trigger: track,
+          pin: true,
+          start: "top top",
+          end: () => "+=" + travel(),
+          scrub: 1,
+          invalidateOnRefresh: true,
+          toggleClass: { targets, className: "is-hidden" }
+        }
+      });
+    });
+  }
+
+  /* -------------------------------------------------------- Masked section */
+  function setupMaskedSection() {
+    const sections = document.querySelectorAll("[data-masked-section]");
+    if (!sections.length || !hasGsap || reduce) return;
+
+    sections.forEach((section) => {
+      const overlay = section.querySelector("[data-masked-section-overlay]");
+      const circle = section.querySelector("[data-masked-section-circle]");
+      const trigger = section.querySelector("[data-masked-section-trigger]");
+      if (!overlay || !circle || !trigger) return;
+
+      const updateCircle = (event) => {
+        const rect = section.getBoundingClientRect();
+        const xPercent = ((event.clientX - rect.left) / rect.width) * 100;
+        const yPercent = ((event.clientY - rect.top) / rect.height) * 100;
+
+        gsap.to(circle, {
+          x: xPercent - (circle.offsetWidth / rect.width) * 50 + "%",
+          y: yPercent - (circle.offsetHeight / rect.height) * 50 + "%",
+          duration: 0.4,
+          ease: "linear",
+          onUpdate: () => {
+            overlay.style.clipPath = `circle(${
+              (circle.offsetWidth / rect.width) * 50
+            }% at ${xPercent}% ${yPercent}%)`;
+          }
+        });
+      };
+
+      section.addEventListener("mousemove", (event) => {
+        if (window.innerWidth < 992) return;
+        updateCircle(event);
+        if (event.target.closest("[data-masked-section-trigger]")) {
+          gsap.to(overlay, {
+            clipPath: "circle(100% at 50% 50%)",
+            duration: 0.4,
+            ease: "linear"
+          });
+        }
+      });
+
+      section.addEventListener("mouseleave", (event) => {
+        if (window.innerWidth < 992) return;
+        const rect = section.getBoundingClientRect();
+        const xPercent = ((event.clientX - rect.left) / rect.width) * 100;
+        const yPercent = ((event.clientY - rect.top) / rect.height) * 100;
+        updateCircle(event);
+        gsap.to(overlay, {
+          duration: 0.4,
+          ease: "linear",
+          onUpdate: () => {
+            overlay.style.clipPath = `circle(0% at ${xPercent}% ${yPercent}%)`;
+          }
+        });
+      });
+
+      trigger.addEventListener("mouseenter", () => {
+        if (window.innerWidth < 992) return;
+        section.classList.add("is-active");
+        gsap.to(overlay, {
+          clipPath: "circle(100% at 50% 50%)",
+          duration: 0.4,
+          ease: "linear"
+        });
+      });
+
+      trigger.addEventListener("mouseleave", () => {
+        if (window.innerWidth < 992) return;
+        section.classList.remove("is-active");
+        const rect = section.getBoundingClientRect();
+        const xPercent =
+          ((circle.offsetLeft + circle.offsetWidth / 2) / rect.width) * 100;
+        const yPercent =
+          ((circle.offsetTop + circle.offsetHeight / 2) / rect.height) * 100;
+        gsap.to(overlay, {
+          clipPath: `circle(${
+            (circle.offsetWidth / rect.width) * 50
+          }% at ${xPercent}% ${yPercent}%)`,
+          duration: 0.4,
+          ease: "linear"
+        });
+      });
+    });
+  }
+
+  /* --------------------------------------------------- Reveal animations */
+  function setupAnimations() {
+    const animated = document.querySelectorAll("[data-animation]");
+
+    animated.forEach((el) => {
+      el.style.setProperty(
+        "--animation-delay",
+        (el.dataset.animationDelay == null ? 0 : el.dataset.animationDelay) + "s"
+      );
+      el.style.setProperty(
+        "--animation-duration",
+        (el.dataset.animationDuration == null
+          ? ".3"
+          : el.dataset.animationDuration) + "s"
+      );
+      el.style.setProperty(
+        "--animation-easing",
+        el.dataset.animationEasing == null ? "ease-in-out" : el.dataset.animationEasing
+      );
+    });
+
+    const textNewlines = document.querySelectorAll(".text-newline");
+
+    if (reduce) {
+      animated.forEach((el) => el.classList.add("is-animated"));
+      textNewlines.forEach((el) => el.classList.add("is-animated"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-animated");
+        });
+      },
+      { rootMargin: "-10%" }
+    );
+
+    const reveal = () => {
+      animated.forEach((el) => {
+        if (el.hasAttribute("data-animate-on-load")) el.classList.add("is-animated");
+        else observer.observe(el);
+      });
+      textNewlines.forEach((el) => {
+        const loadParent = el.closest("[data-animate-on-load]");
+        if (loadParent) loadParent.classList.add("is-animated");
+        else observer.observe(el);
+      });
+    };
+
+    requestAnimationFrame(() => requestAnimationFrame(reveal));
+  }
+
+  /* -------------------------------------------------------- Book carousel */
+  function setupBookCarousel() {
+    const root = document.querySelector("[data-book-carousel]");
+    if (!root) return;
+
+    const stage = root.querySelector(".book__stage");
+    const pages = Array.from(root.querySelectorAll("[data-book-page]"));
+    const prevBtn = root.querySelector("[data-book-prev]");
+    const nextBtn = root.querySelector("[data-book-next]");
+    const pager = root.querySelector("[data-book-pager]");
+    if (!stage || !pages.length) return;
+
+    let index = 0;
+    let busy = false;
+    const total = pages.length;
+    const duration = reduce ? 0.01 : 0.9;
+    const ease = "power2.inOut";
+
+    if (hasGsap) {
+      gsap.set(stage, { perspective: 2200 });
+      gsap.set(pages, {
+        transformOrigin: "left center",
+        transformStyle: "preserve-3d",
+        rotationY: 0,
+        force3D: true
+      });
+    }
+
+    function syncZ() {
+      pages.forEach((page, i) => {
+        // Flipped pages stack on the left; remaining pages stack on the right.
+        page.style.zIndex = String(i < index ? i + 1 : total - i + 10);
+      });
+    }
+
+    function updateUI() {
+      const label = Math.min(Math.max(index, 0) + 1, total);
+      if (pager) pager.textContent = `${label} / ${total}`;
+      if (prevBtn) prevBtn.disabled = busy || index <= 0;
+      if (nextBtn) nextBtn.disabled = busy || index >= total;
+      stage.classList.toggle("is-at-start", index <= 0);
+      stage.classList.toggle("is-at-end", index >= total);
+    }
+
+    function setPageRotation(page, deg, animate, onDone) {
+      if (!hasGsap || reduce) {
+        page.style.transform = `rotateY(${deg}deg)`;
+        if (onDone) onDone();
+        return;
+      }
+      gsap.killTweensOf(page);
+      if (!animate) {
+        gsap.set(page, { rotationY: deg });
+        if (onDone) onDone();
+        return;
+      }
+      gsap.to(page, {
+        rotationY: deg,
+        duration,
+        ease,
+        overwrite: true,
+        onComplete: onDone
+      });
+    }
+
+    function flipTo(nextIndex) {
+      if (busy) return;
+      nextIndex = Math.max(0, Math.min(total, nextIndex));
+      if (nextIndex === index) return;
+
+      const from = index;
+      const goingForward = nextIndex > from;
+      busy = true;
+      updateUI();
+
+      const done = () => {
+        index = nextIndex;
+        busy = false;
+        syncZ();
+        updateUI();
+      };
+
+      if (goingForward) {
+        // Flip exactly one page at a time for click reliability
+        const page = pages[from];
+        if (!page) {
+          done();
+          return;
+        }
+        page.style.zIndex = String(total + 20);
+        setPageRotation(page, -180, true, done);
+        return;
+      }
+
+      const page = pages[nextIndex];
+      if (!page) {
+        done();
+        return;
+      }
+      page.style.zIndex = String(total + 20);
+      setPageRotation(page, 0, true, done);
+    }
+
+    function next() {
+      if (index >= total) return;
+      flipTo(index + 1);
+    }
+
+    function prev() {
+      if (index <= 0) return;
+      flipTo(index - 1);
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        next();
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        prev();
+      });
+    }
+
+    // Click: right side turns forward, left side turns back
+    stage.addEventListener("click", (event) => {
+      if (busy) return;
+      if (event.target.closest("button")) return;
+      const rect = stage.getBoundingClientRect();
+      const ratio = (event.clientX - rect.left) / rect.width;
+      if (ratio < 0.5) prev();
+      else next();
+    });
+
+    syncZ();
+    updateUI();
+  }
+
+  /* --------------------------------------------------------------- Splide */
+  function setupSliders() {
+    if (typeof window.Splide === "undefined") return;
+
+    document.querySelectorAll(".slider-logos").forEach((el) => {
+      const options = {
+        type: "loop",
+        drag: "free",
+        dragAngleThreshold: 15,
+        speed: 800,
+        easing: "cubic-bezier(0.25,0.46,1.45,0.94)",
+        focus: "center",
+        arrows: false,
+        pagination: false,
+        autoWidth: true
+      };
+      if (!reduce) options.autoScroll = { speed: 1.5, pauseOnHover: true };
+      new Splide(el, options).mount(
+        options.autoScroll && window.splide ? window.splide.Extensions : undefined
+      );
+    });
+
+    document.querySelectorAll(".slider-reviews").forEach((el) => {
+      const options = {
+        type: "loop",
+        drag: "free",
+        dragAngleThreshold: 15,
+        speed: 700,
+        easing: "cubic-bezier(0.25,0.46,0.45,0.94)",
+        focus: "center",
+        arrows: false,
+        pagination: false,
+        gap: "1.1rem",
+        autoWidth: true,
+        pauseOnHover: true,
+        pauseOnFocus: true
+      };
+      if (!reduce) options.autoScroll = { speed: 0.65, pauseOnHover: true };
+      new Splide(el, options).mount(
+        options.autoScroll && window.splide ? window.splide.Extensions : undefined
+      );
+    });
+  }
+
+  /* --------------------------------------------------------- Custom cursor */
+  function setupCursor() {
+    if (!customCursor || !isFine || isTouch) {
+      if (customCursor) customCursor.classList.add("is-invisible");
+      return;
+    }
+
+    document.addEventListener("mousemove", (event) => {
+      customCursor.style.left = event.clientX + "px";
+      customCursor.style.top = event.clientY + "px";
+    });
+
+    document.querySelectorAll("[data-cursor-text]").forEach((el) => {
+      const text = el.getAttribute("data-cursor-text");
+      el.addEventListener("mouseenter", () => {
+        customCursor.classList.add("is-active");
+        if (text) {
+          if (cursorTextEl) cursorTextEl.textContent = text;
+          customCursor.classList.add("has-text");
+        }
+      });
+      el.addEventListener("mouseleave", () => {
+        customCursor.classList.remove("is-active", "has-text");
+        if (cursorTextEl) cursorTextEl.textContent = "";
+      });
+    });
+  }
+
+  /* -------------------------------------------------- Footer intersection */
+  function setupFooter() {
+    const footer = document.querySelector(".footer");
+    if (!footer) return;
+
+    if (reduce || typeof IntersectionObserver === "undefined") {
+      footer.classList.add("is-visible");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          footer.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      },
+      { root: null, rootMargin: "0px 0px -30% 0px", threshold: [0, 1] }
+    );
+    observer.observe(footer);
+  }
+
+  /* ---------------------------------------------------- Smooth anchor links */
+  function setupAnchors() {
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href");
+        if (!id || id === "#") return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        event.preventDefault();
+        if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.2 });
+        else target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------------- Boot */
+  function init() {
+    startLenis();
+    setupMenu();
+    setupAnchors();
+    setupHeroVideo();
+
+    splitTextToNewLines();
+
+    if (hasGsap && window.ScrollTrigger) {
+      setupImageReveal();
+      setupHorizontalScroll();
+      setupMaskedSection();
+      setupParallax();
+    } else {
+      document
+        .querySelectorAll("[data-image-reveal-wrapper]")
+        .forEach((w) => (w.style.width = "100%"));
+    }
+
+    setupAnimations();
+    setupBookCarousel();
+    setupSliders();
+    setupCursor();
+    setupFooter();
+    playIntro();
+    checkSticky();
+
+    window.addEventListener("scroll", checkSticky, { passive: true });
+
+    window.addEventListener(
+      "load",
+      () => {
+        checkSticky();
+        if (hasGsap && window.ScrollTrigger) ScrollTrigger.refresh();
+        if (lenis) lenis.resize();
+      },
+      { once: true }
+    );
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      checkSticky();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (hasGsap && window.ScrollTrigger) ScrollTrigger.refresh();
+      }, 120);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+
+    </script>
+  </body>
+</html>
